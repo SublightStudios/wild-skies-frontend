@@ -30,3 +30,36 @@ docker compose down
 ```
 
 Runs on [http://localhost:3000](http://localhost:3000)
+
+## Deploy to Nginx
+
+```bash
+# Build
+npm run build
+
+# Copy to server
+/var/www/html/
+
+Nginx config:
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com;
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri.html $uri/ /index.html;
+    }
+
+    location /_next/static/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```

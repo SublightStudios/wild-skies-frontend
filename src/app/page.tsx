@@ -5,7 +5,7 @@ import AirshipsSection from "@/components/AirshipsSection";
 import TimelineSection from "@/components/TimelineSection";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+export default function Home(): React.JSX.Element {
   return (
     <main className="min-h-screen bg-ws-darker">
       <Navbar />

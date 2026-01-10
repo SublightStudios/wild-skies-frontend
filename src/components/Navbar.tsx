@@ -11,7 +11,7 @@ const navItems = [
   { id: "timeline", label: "Timeline" },
 ];
 
-export default function Navbar() {
+export default function Navbar(): React.JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);

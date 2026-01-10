@@ -1,8 +1,6 @@
-"use client";
-
 import Image from "next/image";
 
-export default function Footer() {
+export default function Footer(): React.JSX.Element {
   return (
     <footer className="py-12 px-4 border-t border-ws-accent/10 bg-ws-darker">
       <div className="max-w-7xl mx-auto">

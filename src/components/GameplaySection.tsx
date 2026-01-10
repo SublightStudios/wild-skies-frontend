@@ -3,6 +3,17 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import Image from "next/image";
+import { smoothScrollTo } from "@/utils/scrollTo";
+
+function getCircleStyles(index: number, activeIndex: number): string {
+  if (index === activeIndex) {
+    return "border-ws-accent bg-ws-accent/20 glow-dot-active";
+  }
+  if (index < activeIndex) {
+    return "border-ws-accent/60 bg-ws-accent/10 glow-dot";
+  }
+  return "border-ws-muted/30 bg-ws-card hover:border-ws-accent/50";
+}
 
 interface GameplayItem {
   id: string;
@@ -12,58 +23,66 @@ interface GameplayItem {
   icon?: string; // Optional icon image for the circle
 }
 
+const PLACEHOLDER_IMAGES = [
+  "/images/placeholder-1.jpg",
+  "/images/placeholder-2.jpg",
+  "/images/placeholder-3.jpg",
+];
+
+const PLACEHOLDER_DESCRIPTION =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
 const gameplayItems: GameplayItem[] = [
   {
     id: "gameplay1",
     title: "gameplay 1",
-    description:
-      "Long description of gameplay feature 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 1. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay1.png",
   },
-    {
+  {
     id: "gameplay2",
     title: "gameplay 2",
-    description:
-      "Long description of gameplay feature 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 2. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay2.png",
   },
-    {
+  {
     id: "gameplay3",
     title: "gameplay 3",
-    description:
-      "Long description of gameplay feature 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 3. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay3.png",
   },
-    {
+  {
     id: "gameplay4",
     title: "gameplay 4",
-    description:
-      "Long description of gameplay feature 4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 4. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay4.png",
   },
-    {
+  {
     id: "gameplay5",
     title: "gameplay 5",
-    description:
-      "Long description of gameplay feature 5. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 5. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay5.png",
   },
-    {
+  {
     id: "gameplay6",
     title: "gameplay 6",
-    description:
-      "Long description of gameplay feature 6. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    images: ["/images/placeholder-1.jpg", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Long description of gameplay feature 6. ${PLACEHOLDER_DESCRIPTION}`,
+    images: PLACEHOLDER_IMAGES,
     icon: "/images/icons/gameplay6.png",
   },
 ];
 
-function ImageGallery({ images, title }: { images: string[]; title: string }) {
+interface ImageGalleryProps {
+  images: string[];
+  title: string;
+}
+
+function ImageGallery({ images, title }: ImageGalleryProps): React.JSX.Element {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextImage = () => {
@@ -142,7 +161,7 @@ function ImageGallery({ images, title }: { images: string[]; title: string }) {
   );
 }
 
-export default function GameplaySection() {
+export default function GameplaySection(): React.JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -179,15 +198,8 @@ export default function GameplaySection() {
                 {/* Circle with image or number */}
                 <button
                   onClick={() => setActiveIndex(index)}
-                  className={`relative flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-full border-3 flex items-center justify-center transition-all duration-300 overflow-hidden ${
-                    index === activeIndex
-                      ? "border-ws-accent bg-ws-accent/20 glow-dot-active"
-                      : index < activeIndex
-                      ? "border-ws-accent/60 bg-ws-accent/10 glow-dot"
-                      : "border-ws-muted/30 bg-ws-card hover:border-ws-accent/50"
-                  }`}
+                  className={`relative flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-full border-3 flex items-center justify-center transition-all duration-300 overflow-hidden ${getCircleStyles(index, activeIndex)}`}
                 >
-                  {/* Icon image or fallback to number */}
                   {item.icon ? (
                     <Image
                       src={item.icon}
@@ -195,25 +207,10 @@ export default function GameplaySection() {
                       width={96}
                       height={96}
                       className="w-full h-full object-cover rounded-full"
-                      onError={(e) => {
-                        // Hide image on error, number will show via sibling
-                        e.currentTarget.style.display = 'none';
-                      }}
                     />
                   ) : (
                     <span
                       className={`text-2xl font-bold ${
-                        index <= activeIndex ? "text-ws-accent" : "text-ws-muted"
-                      }`}
-                    >
-                      {index + 1}
-                    </span>
-                  )}
-
-                  {/* Fallback number (shown if no icon) */}
-                  {!item.icon && (
-                    <span
-                      className={`absolute text-2xl font-bold ${
                         index <= activeIndex ? "text-ws-accent" : "text-ws-muted"
                       }`}
                     >
@@ -306,26 +303,7 @@ export default function GameplaySection() {
         className="mt-20"
       >
         <button
-          onClick={() => {
-            const airships = document.getElementById("airships");
-            if (airships) {
-              const start = window.scrollY;
-              const end = airships.offsetTop - 80;
-              const duration = 500;
-              const startTime = performance.now();
-
-              const animateScroll = (currentTime: number) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = 1 - Math.pow(1 - progress, 3);
-                window.scrollTo(0, start + (end - start) * easeProgress);
-                if (progress < 1) {
-                  requestAnimationFrame(animateScroll);
-                }
-              };
-              requestAnimationFrame(animateScroll);
-            }
-          }}
+          onClick={() => smoothScrollTo("airships")}
           className="block w-full max-w-4xl mx-auto cursor-pointer"
         >
           <div className="relative group">

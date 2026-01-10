@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { smoothScrollTo } from "@/utils/scrollTo";
 
-export default function HomeSection() {
+export default function HomeSection(): React.JSX.Element {
   return (
     <section
       id="home"
@@ -86,26 +87,7 @@ export default function HomeSection() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
       >
         <button
-          onClick={() => {
-            const gameplay = document.getElementById("gameplay");
-            if (gameplay) {
-              const start = window.scrollY;
-              const end = gameplay.offsetTop - 80;
-              const duration = 500;
-              const startTime = performance.now();
-
-              const animateScroll = (currentTime: number) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeProgress = 1 - Math.pow(1 - progress, 3);
-                window.scrollTo(0, start + (end - start) * easeProgress);
-                if (progress < 1) {
-                  requestAnimationFrame(animateScroll);
-                }
-              };
-              requestAnimationFrame(animateScroll);
-            }
-          }}
+          onClick={() => smoothScrollTo("gameplay")}
           className="cursor-pointer group"
         >
           <motion.div

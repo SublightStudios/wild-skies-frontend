@@ -3,6 +3,52 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
+type PhaseStatus = "completed" | "current" | "upcoming";
+
+function getCardBorderStyles(status: PhaseStatus): string {
+  switch (status) {
+    case "current":
+      return "border-ws-accent shadow-glow";
+    case "completed":
+      return "border-ws-accent/40";
+    default:
+      return "border-ws-muted/20";
+  }
+}
+
+function getTitleStyles(status: PhaseStatus): string {
+  switch (status) {
+    case "current":
+      return "text-ws-accent";
+    case "completed":
+      return "text-ws-glow";
+    default:
+      return "text-ws-muted";
+  }
+}
+
+function getDotStyles(status: PhaseStatus): string {
+  switch (status) {
+    case "current":
+      return "border-ws-accent bg-ws-accent glow-dot-active";
+    case "completed":
+      return "border-ws-accent bg-ws-accent/30 glow-dot";
+    default:
+      return "border-ws-muted/50 bg-ws-card";
+  }
+}
+
+function getMobileIndicatorStyles(status: PhaseStatus): string {
+  switch (status) {
+    case "current":
+      return "bg-ws-accent glow-dot-active";
+    case "completed":
+      return "bg-ws-accent/60 glow-dot";
+    default:
+      return "bg-ws-muted/30";
+  }
+}
+
 interface TimelinePhase {
   id: string;
   title: string;
@@ -43,7 +89,7 @@ const timelinePhases: TimelinePhase[] = [
   },
 ];
 
-export default function TimelineSection() {
+export default function TimelineSection(): React.JSX.Element {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -89,8 +135,8 @@ export default function TimelineSection() {
           <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-4">
             {timelinePhases.map((phase, index) => {
               const isTop = index % 2 === 0;
-              const isCompleted = phase.status === "completed";
-              const isCurrent = phase.status === "current";
+              const isActive = phase.status !== "upcoming";
+              const connectorColor = isActive ? "bg-ws-accent/50" : "bg-ws-muted/30";
 
               return (
                 <motion.div
@@ -98,56 +144,41 @@ export default function TimelineSection() {
                   initial={{ opacity: 0, y: isTop ? -30 : 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                  className={`flex-1 flex flex-col items-center ${isTop ? "md:flex-col" : "md:flex-col-reverse"
-                    }`}
+                  className={`flex-1 flex flex-col items-center ${
+                    isTop ? "md:flex-col" : "md:flex-col-reverse"
+                  }`}
                 >
                   {/* Content Card */}
                   <div
-                    className={`relative bg-ws-card/50 rounded-xl p-4 border transition-all max-w-xs ${isCurrent
-                        ? "border-ws-accent shadow-glow"
-                        : isCompleted
-                          ? "border-ws-accent/40"
-                          : "border-ws-muted/20"
-                      } ${isTop ? "md:mb-8" : "md:mt-8"}`}
+                    className={`relative bg-ws-card/50 rounded-xl p-4 border transition-all max-w-xs ${getCardBorderStyles(phase.status)} ${
+                      isTop ? "md:mb-8" : "md:mt-8"
+                    }`}
                   >
-                    <h3
-                      className={`text-lg font-bold mb-2 ${isCurrent
-                          ? "text-ws-accent"
-                          : isCompleted
-                            ? "text-ws-glow"
-                            : "text-ws-muted"
-                        }`}
-                    >
+                    <h3 className={`text-lg font-bold mb-2 ${getTitleStyles(phase.status)}`}>
                       {phase.title}
                     </h3>
                     <p className="text-sm text-ws-text/80 leading-relaxed">
                       {phase.description}
                     </p>
 
-                    {/* Status badge */}
-                    {isCurrent && (
+                    {phase.status === "current" && (
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-ws-accent text-ws-darker text-xs font-bold rounded-full">
                         CURRENT
                       </div>
                     )}
 
-                    {/* Connector line to dot (mobile hidden) */}
                     <div
-                      className={`hidden md:block absolute left-1/2 w-0.5 h-6 -translate-x-1/2 ${isCompleted || isCurrent ? "bg-ws-accent/50" : "bg-ws-muted/30"
-                        } ${isTop ? "-bottom-6" : "-top-6"}`}
+                      className={`hidden md:block absolute left-1/2 w-0.5 h-6 -translate-x-1/2 ${connectorColor} ${
+                        isTop ? "-bottom-6" : "-top-6"
+                      }`}
                     />
                   </div>
 
                   {/* Dot on timeline */}
                   <div
-                    className={`relative w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all hidden md:flex ${isCurrent
-                        ? "border-ws-accent bg-ws-accent glow-dot-active"
-                        : isCompleted
-                          ? "border-ws-accent bg-ws-accent/30 glow-dot"
-                          : "border-ws-muted/50 bg-ws-card"
-                      }`}
+                    className={`relative w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all hidden md:flex ${getDotStyles(phase.status)}`}
                   >
-                    {isCompleted && (
+                    {phase.status === "completed" && (
                       <svg
                         className="w-3 h-3 text-ws-accent"
                         fill="none"
@@ -166,12 +197,7 @@ export default function TimelineSection() {
 
                   {/* Mobile indicator */}
                   <div
-                    className={`md:hidden w-4 h-4 rounded-full my-2 ${isCurrent
-                        ? "bg-ws-accent glow-dot-active"
-                        : isCompleted
-                          ? "bg-ws-accent/60 glow-dot"
-                          : "bg-ws-muted/30"
-                      }`}
+                    className={`md:hidden w-4 h-4 rounded-full my-2 ${getMobileIndicatorStyles(phase.status)}`}
                   />
                 </motion.div>
               );

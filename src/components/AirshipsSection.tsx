@@ -16,57 +16,33 @@ const airshipFeatures: AirshipFeature[] = [
     id: "feature1",
     title: "Feature 1 title",
     shortTitle: "Feat 1",
-    description:
-      "Description 1",
-    details: [
-      "Detail 1",
-      "Detail 2",
-      "Detail 3",
-      "Detail 4",
-    ],
+    description: "Description 1",
+    details: ["Detail 1", "Detail 2", "Detail 3", "Detail 4"],
   },
-    {
+  {
     id: "feature2",
     title: "Feature 2 title",
     shortTitle: "Feat 2",
-    description:
-      "Description 2",
-    details: [
-      "Detail 1",
-      "Detail 2",
-      "Detail 3",
-      "Detail 4",
-    ],
+    description: "Description 2",
+    details: ["Detail 1", "Detail 2", "Detail 3", "Detail 4"],
   },
-    {
+  {
     id: "feature3",
     title: "Feature 3 title",
     shortTitle: "Feat 3",
-    description:
-      "Description 3",
-    details: [
-      "Detail 1",
-      "Detail 2",
-      "Detail 3",
-      "Detail 4",
-    ],
+    description: "Description 3",
+    details: ["Detail 1", "Detail 2", "Detail 3", "Detail 4"],
   },
-    {
+  {
     id: "feature4",
     title: "Feature 4 title",
     shortTitle: "Feat 4",
-    description:
-      "Description 4",
-    details: [
-      "Detail 1",
-      "Detail 2",
-      "Detail 3",
-      "Detail 4",
-    ],
-  }
+    description: "Description 4",
+    details: ["Detail 1", "Detail 2", "Detail 3", "Detail 4"],
+  },
 ];
 
-export default function AirshipsSection() {
+export default function AirshipsSection(): React.JSX.Element {
   const [activeFeature, setActiveFeature] = useState(0);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });

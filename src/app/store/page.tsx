@@ -1,4 +1,4 @@
-export default function StorePage() {
+export default function StorePage(): React.JSX.Element {
   return (
     <main className="min-h-screen bg-ws-darker flex items-center justify-center">
       <div className="text-center">
