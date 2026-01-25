@@ -73,10 +73,10 @@ export default function AirshipsSection(): React.JSX.Element {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="text-ws-accent">Airships</span>
+            <span className="text-ws-accent">Minigames</span>
           </h2>
           <p className="text-ws-muted max-w-2xl mx-auto text-lg">
-            Your own Airship. Details.
+            Engage in custom built minigames that enhance your Wild Skies experience
           </p>
         </motion.div>
 
@@ -180,11 +180,11 @@ export default function AirshipsSection(): React.JSX.Element {
               <div className="absolute inset-0 bg-ws-accent/20 blur-lg rounded-xl group-hover:bg-ws-accent/30 transition-all" />
               <div className="relative bg-gradient-to-r from-ws-card via-ws-dark to-ws-card rounded-lg border border-ws-accent/40 p-4 text-center group-hover:border-ws-accent group-hover:shadow-glow transition-all">
                 <p className="text-base md:text-lg font-medium text-ws-text">
-                  Curious about our{" "}
-                  <span className="text-ws-accent font-bold">Development Roadmap</span>?
+                  Check out planned{" "}
+                  <span className="text-ws-accent font-bold">Gameplay</span> features!
                 </p>
                 <div className="mt-2 flex items-center justify-center gap-2 text-ws-muted group-hover:text-ws-accent transition-colors">
-                  <span className="text-sm">See the timeline</span>
+                  <span className="text-sm">Discover more</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>

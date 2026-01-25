@@ -24,6 +24,8 @@ coverage/
 .env.test.local
 .env.production.local
 .env*.local
+key
+DEPLOYMENT.md
 
 # Logs
 logs/

@@ -10,8 +10,8 @@ export default function Home(): React.JSX.Element {
     <main className="min-h-screen bg-ws-darker">
       <Navbar />
       <HomeSection />
-      <GameplaySection />
       <AirshipsSection />
+      <GameplaySection />
       <TimelineSection />
       <Footer />
     </main>

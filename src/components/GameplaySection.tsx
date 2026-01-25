@@ -427,11 +427,11 @@ export default function GameplaySection(): React.JSX.Element {
               {/* Button */}
               <div className="relative bg-gradient-to-r from-ws-card via-ws-dark to-ws-card rounded-lg border border-ws-accent/40 p-4 text-center group-hover:border-ws-accent group-hover:shadow-glow transition-all">
                 <p className="text-base md:text-lg font-medium text-ws-text">
-                  Ready to master unique{" "}
-                  <span className="text-ws-accent font-bold">Aerial Traversal</span> skills?
+                  Curious about our{" "}
+                  <span className="text-ws-accent font-bold">Development Roadmap</span>?
                 </p>
                 <div className="mt-2 flex items-center justify-center gap-2 text-ws-muted group-hover:text-ws-accent transition-colors">
-                  <span className="text-sm">Discover more</span>
+                  <span className="text-sm">See the timeline</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>

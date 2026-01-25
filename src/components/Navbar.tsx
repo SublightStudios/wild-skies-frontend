@@ -16,7 +16,7 @@ export default function Navbar(): React.JSX.Element {
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const serverIP = "play.domain.com";
+  const serverIP = "play.wildskies.net";
 
   useEffect(() => {
     const handleScroll = () => {
