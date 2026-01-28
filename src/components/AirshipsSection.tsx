@@ -173,7 +173,7 @@ export default function AirshipsSection(): React.JSX.Element {
           className="mt-8"
         >
           <button
-            onClick={() => smoothScrollTo("timeline")}
+            onClick={() => smoothScrollTo("gameplay")}
             className="block w-full max-w-3xl mx-auto cursor-pointer"
           >
             <div className="relative group">

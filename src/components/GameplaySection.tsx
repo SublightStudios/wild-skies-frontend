@@ -417,7 +417,7 @@ export default function GameplaySection(): React.JSX.Element {
           className="mt-8"
         >
           <button
-            onClick={() => smoothScrollTo("airships")}
+            onClick={() => smoothScrollTo("timeline")}
             className="block w-full max-w-3xl mx-auto cursor-pointer"
           >
             <div className="relative group">
