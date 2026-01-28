@@ -87,7 +87,7 @@ export default function HomeSection(): React.JSX.Element {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
       >
         <button
-          onClick={() => smoothScrollTo("gameplay")}
+          onClick={() => smoothScrollTo("airships")}
           className="cursor-pointer group"
         >
           <motion.div
